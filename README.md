@@ -19,7 +19,10 @@ make generate
 처음 프로젝트 받으면 Tuist signing 에 있는 명령어 실행</br> 
 
 ## Tuist signing 암호화 해제 
+
 ```swift
+cd Tuist 한후
+
 tuist signing decrypt
 ```
 
