@@ -13,5 +13,13 @@ curl -Ls https://install.tuist.io | bash
 make clean // optional
 make fetch // optional
 make cache
-make  generate
+make generate
 ```
+
+처음 프로젝트 받으면 Tuist signing 에 있는 명령어 실행</br> 
+
+## Tuist signing 암호화 해제 
+```swift
+tuist signing decrypt
+```
+
