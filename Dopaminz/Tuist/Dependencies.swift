@@ -16,7 +16,8 @@ let swiftpackage = SwiftPackageManagerDependencies(
         .remote(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", requirement: .upToNextMajor(from: "2.0.0")),
         .remote(url: "https://github.com/Kitura/Swift-JWT.git", requirement: .branch("master")),
         .remote(url: "https://github.com/kishikawakatsumi/KeychainAccess", requirement: .upToNextMajor(from: "4.2.2")),
-//        .remote(url: "https://github.com/kakao/kakao-ios-sdk", requirement: .upToNextMajor(from: "2.21.0")),
+        .remote(url: "https://github.com/SVGKit/SVGKit.git", requirement: .upToNextMajor(from: "3.0.0")),
+        .remote(url: "https://github.com/onevcat/Kingfisher.git", requirement: .upToNextMinor(from: "7.6.0")),
     ],
     baseSettings: .settings(
        configurations: [

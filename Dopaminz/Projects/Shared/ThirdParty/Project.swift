@@ -13,7 +13,9 @@ let project = Project.makeAppModule(
         .SPM.composableArchitecture,
         .SPM.sdwebImage,
         .SPM.swiftJWT,
-        .SPM.keychainAccess
+        .SPM.keychainAccess,
+        .SPM.kingfisher,
+        .SPM.svgKit
     ],
     sources: ["Sources/**"]
 )

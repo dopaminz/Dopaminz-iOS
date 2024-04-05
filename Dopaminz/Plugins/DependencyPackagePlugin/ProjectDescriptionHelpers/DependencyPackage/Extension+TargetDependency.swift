@@ -22,6 +22,9 @@ public extension TargetDependency.SPM {
    
     static let keychainAccess = TargetDependency.external(name: "KeychainAccess", condition: .none)
     
+    static let kingfisher = TargetDependency.external(name: "Kingfisher")
+    static let svgKit = TargetDependency.external(name: "SVGKit")
+    
 }
 
 
