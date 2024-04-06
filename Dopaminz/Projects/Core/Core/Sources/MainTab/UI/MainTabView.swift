@@ -22,7 +22,7 @@ public struct MainTabView : View {
     
     public var body: some View {
         TabView {
-            HomeView(store: store.scope(state: \.home, action: \.home))
+            HomeView()
                 .tabItem {
                     Image(asset: .Home)
                         .resizable()

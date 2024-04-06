@@ -1,5 +1,5 @@
 //
-//  LoginFeature.swift
+//  SignUPInfoFeature.swift
 //  Feature
 //
 //  Created by 서원지 on 4/6/24.
@@ -10,25 +10,25 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-public struct LoginFeature {
+public struct SignUPInfoFeature {
     public init() {}
     
     @ObservableState
     public struct State: Equatable {
         public init() {}
-        var title: String = "Login"
         var loginId: String = ""
         var password: String = ""
+        var nickName: String = ""
     }
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case login(
+        case signUP(
             userName: String,
             password: String,
+            nickName: String,
             completion: () -> Void
         )
-        case presntSignUP
     }
     
     @Dependency(AuthUseCase.self) var authUseCase
@@ -36,23 +36,22 @@ public struct LoginFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
-            case let .login(userName: userName, password: password, completion:  completion):
-                return .run { send in
-                     await authUseCase.requsetLogin(
-                        userName: userName,
-                        password: password,
-                        completion: completion
-                     )
-                }
-                
             case .binding(_):
                 return .none
                 
-            case .presntSignUP:
-                return .none
+                
+            
+            case let .signUP(userName: userName, password: password, nickName: nickName, completion: completion):
+                return .run { send in
+                    await authUseCase.requsetSignUP(
+                        userName: userName,
+                        password: password,
+                        nickName: nickName,
+                        completion: completion
+                    )
+                }
             }
         }
-
     }
 }
 

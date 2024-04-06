@@ -37,8 +37,9 @@ public struct AuthView: View {
                     
                     logoImage()
                    
-                    loginButton()
+                    loginTitle()
                     
+                    loginButton()
                     
                     Spacer()
                     
@@ -49,6 +50,17 @@ public struct AuthView: View {
             switch switchStore.case {
             case let .login(loginStore):
                 LoginView(store: loginStore, backAction: {
+                    store.send(.removePath)
+                })
+                .navigationBarBackButtonHidden()
+            case let .signUP(signUPStore):
+                SignUPView(store: signUPStore, backAction: {
+                    store.send(.removePath)
+                })
+                .navigationBarBackButtonHidden()
+                
+            case let .signUPInfo(signUPInfoStore):
+                SignUPInfoView(store: signUPInfoStore, backAction: {
                     store.send(.removePath)
                 })
                 .navigationBarBackButtonHidden()
@@ -77,10 +89,34 @@ fileprivate extension AuthView {
     }
     
     @ViewBuilder
+    private func loginTitle() -> some View {
+        VStack {
+            Spacer()
+                .frame(height: UIScreen.screenHeight*0.05)
+            
+            Text(store.authTitle)
+                .pretendardFont(family: .Bold, size: 20)
+                .foregroundColor(Color.basicBlack)
+            
+            Spacer()
+                .frame(height: 11)
+            
+            Text(store.authSubTitle)
+                .pretendardFont(family: .Regular, size: 16)
+                .foregroundColor(Color.gray)
+            
+            Text(store.authLastTitle)
+                .pretendardFont(family: .Regular, size: 16)
+                .foregroundColor(Color.gray)
+            
+        }
+    }
+    
+    @ViewBuilder
     private func loginButton() -> some View {
         VStack {
             Spacer()
-                .frame(height: UIScreen.screenHeight*0.4)
+                .frame(height: UIScreen.screenHeight*0.3)
             
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.basicBlack, style: .init(lineWidth: 2))

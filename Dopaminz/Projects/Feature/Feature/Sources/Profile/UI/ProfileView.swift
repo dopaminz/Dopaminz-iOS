@@ -22,6 +22,11 @@ public struct ProfileView: View {
     public var body: some View {
         VStack {
             Text(self.store.title)
+            
+            Text("로그아웃")
+                .onTapGesture {
+                    store.send(.logout)
+                }
         }
         
         

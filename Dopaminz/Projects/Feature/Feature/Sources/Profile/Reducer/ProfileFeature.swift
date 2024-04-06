@@ -30,6 +30,7 @@ public struct ProfileFeature {
         case presnetAuthFullScreen
         case closeBottomSheet
         case removePath
+        case logout
     }
     
     @Reducer(state: .equatable)
@@ -69,6 +70,16 @@ public struct ProfileFeature {
                 
             case .removePath:
                 state.path.removeLast()
+                return .none
+                
+            case .logout:
+                state.acessToken = ""
+                try? Keychain().set(state.acessToken, key: "AuthorizationToken")
+                let accessToken = (try? Keychain().get("AuthorizationToken")) ?? ""
+                state.acessToken = accessToken
+                if accessToken == "" {
+                    state.auth = AuthFeature.State()
+                }
                 return .none
             }
         }

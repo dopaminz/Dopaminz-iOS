@@ -11,16 +11,16 @@ import DesignSystem
 import ComposableArchitecture
 
 public struct HomeView: View {
-    @Bindable var store: StoreOf<HomeFeature>
+   /* @Bindable var store: StoreOf<HomeFeature*/
     
     public init(
-        store: StoreOf<HomeFeature>
+//        store: StoreOf<HomeFeature>
     ) {
-        self.store = store
+//        self.store = store
     }
     
     public var body: some View {
-        Text(store.title)
+        Text("")
     }
 }
 

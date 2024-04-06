@@ -19,6 +19,9 @@ public struct AuthFeature {
         var loginButton: Bool = false
         @Presents var login: LoginFeature.State?
         var path: StackState<Path.State> = .init()
+        var authTitle: String = "로그인이 필요한 페이지입니다."
+        var authSubTitle: String = "땅땅땅의 모든 기능을 이용하시려면"
+        var authLastTitle: String = " 회원가입 후 로그인 해주세요."
     }
     
     public enum Action: BindableAction {
@@ -33,6 +36,8 @@ public struct AuthFeature {
     @Reducer(state: .equatable)
     public enum Path {
         case login(LoginFeature)
+        case signUP(SignUPFeature)
+        case signUPInfo(SignUPInfoFeature)
     }
     
     public var body: some ReducerOf<Self> {
@@ -42,7 +47,17 @@ public struct AuthFeature {
             case .binding(_):
                 return .none
 
-            case .path:
+            case let .path(action):
+                switch action {
+                case .element(id: _, action: .login(.presntSignUP)):
+                    state.path.append(.signUP(.init()))
+               
+                case .element(id: _, action: .signUP(.presentSignUPInfo)):
+                    state.path.append(.signUPInfo(.init()))
+                default:
+                    break
+               
+                }
                 return .none
                 
             case .presentLogin:

@@ -23,8 +23,8 @@ struct APIConstants{
 extension APIConstants {
     static var baseHeader: Dictionary<String, String> {
         [
-                authorization : authorizationToken,
-          contentType : APIHeaderManger.shared.contentType
+          authorization : authorizationToken,
+          contentType: APIHeaderManger.shared.contentType
         ]
     }
     static var appleLoginHeader: Dictionary<String, String> {
