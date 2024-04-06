@@ -37,5 +37,8 @@ public enum ImageAsset: String {
     case category_region
     
     case bell
+  
+    case stamp_solved
+    case stamp_pending
 }
 
