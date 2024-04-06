@@ -14,5 +14,8 @@ public enum ImageAsset: String {
     case Home
     case Profile
     case empty
+  
+    case circle_check
+    case circle_exclamanation
 }
 
