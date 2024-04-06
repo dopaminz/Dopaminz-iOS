@@ -65,6 +65,6 @@ public struct Content: Codable {
     }
 }
 
-extension Content: Identifiable {
+extension Content: Identifiable, Equatable {
   public var id: Int { return pollID! }
 }
