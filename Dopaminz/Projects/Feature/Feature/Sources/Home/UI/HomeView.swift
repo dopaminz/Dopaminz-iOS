@@ -18,7 +18,7 @@ public struct HomeView: View {
     var viewModel: HomeRepository = HomeRepository()
     var authviewModel: AuthRepository = AuthRepository()
     @State private var didAppear = false
-    
+    @State var createPOLL: Bool = false
     
     // MARK: - Initializers
     
@@ -59,6 +59,9 @@ public struct HomeView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $createPOLL, content: {
+            CraatePollView()
+        })
         .onAppear {
             if !didAppear {
                 requestPolls()
@@ -82,6 +85,7 @@ public struct HomeView: View {
             
             Button {
                 // navigate to notification
+                createPOLL.toggle()
             } label: {
                 Image(asset: .bell)
                     .resizable()
