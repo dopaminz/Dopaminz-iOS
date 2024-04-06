@@ -43,30 +43,8 @@ public struct HistoryView: View {
                 .frame(height: 12)
             
             HStack {
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(!hasNext ? Color.blue50 : Color.gray50)
-                    .frame(width: 60, height: 34)
-                    .overlay {
-                        Text("진행")
-                            .foregroundStyle(!hasNext ? Color.blue900 : Color.gray500)
-                    }
-                    .onTapGesture {
-                        hasNext.toggle()
-                    }
+//               
                 
-                Spacer()
-                    .frame(width: 8)
-                
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(!hasNext ? Color.blue50 : Color.gray50)
-                    .frame(width: 60, height: 34)
-                    .overlay {
-                        Text("종료")
-                            .foregroundStyle(!hasNext ? Color.blue900 : Color.gray500)
-                    }
-                    .onTapGesture {
-                        hasNext.toggle()
-                    }
                 
                 Spacer()
                 

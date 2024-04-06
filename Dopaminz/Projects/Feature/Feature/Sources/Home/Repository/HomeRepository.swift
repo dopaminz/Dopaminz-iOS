@@ -15,10 +15,6 @@ import Service
 
 @Observable public class HomeRepository: HomeRepositoryProtocol {
    
-    
-
-    
-    
     public init() {}
     
     var pollModel: PollModel?
@@ -33,6 +29,7 @@ import Service
     var pollDeleteCancellable: AnyCancellable?
     var voteCancellable: AnyCancellable?
     var createPollCancellable: AnyCancellable?
+    var commentCancellable: AnyCancellable?
     let provider = MoyaProvider<PollsAPIService>(plugins: [MoyaLoggingPlugin()])
   
     var isLoading = false
@@ -257,6 +254,37 @@ import Service
                 case "400":
                     self?.pollCreateRepositoryMode(model)
                     Log.network("글 등록 실패", model)
+                    
+                default:
+                    break
+                }
+            })
+    }
+    
+    public func createComment(pollId: Int, content: String) async {
+        if let cancellable = commentCancellable {
+            cancellable.cancel()
+        }
+        
+        commentCancellable = provider.requestWithProgressPublisher(.postComment(pollId: pollId, content: content))
+            .compactMap{ $0.response?.data}
+            .receive(on: DispatchQueue.main)
+            .decode(type: CreatePoll.self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished:
+                    break
+                case .failure(let error):
+                    Log.network("네트워크 에러", error.localizedDescription)
+                }
+            }, receiveValue: { [weak self] model in
+                switch model.code {
+                case "200":
+                    self?.pollCreateRepositoryMode(model)
+                    Log.network("댓글 등록 완료", model)
+                case "400":
+                    self?.pollCreateRepositoryMode(model)
+                    Log.network("댓글 등록 실패", model)
                     
                 default:
                     break

@@ -51,6 +51,10 @@ public struct HomeUseCase: HomeUseCaseProtocol  {
     public func createPoll(type: PollType, title: String, content: String, endDate: Date, vote1: String, vote2: String, category: PollCategory) async {
         return await repository.createPoll(type: type, title: title, content: content, endDate: endDate, vote1: vote1, vote2: vote2, category: category)
     }
+    
+    public func createComment(pollId: Int, content: String) async {
+        return await repository.createComment(pollId: pollId, content: content)
+    }
 }
 
 extension HomeUseCase: DependencyKey {

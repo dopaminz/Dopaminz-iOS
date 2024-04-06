@@ -22,4 +22,6 @@ public protocol HomeRepositoryProtocol {
                     vote1: String,
                     vote2: String,
                     category: PollCategory) async
+    
+    func createComment(pollId: Int, content: String) async
 }
