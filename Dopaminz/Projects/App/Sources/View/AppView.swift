@@ -11,6 +11,7 @@ import Shareds
 import DesignSystem
 import ComposableArchitecture
 import Feature
+import Core
 
 struct AppView: View {
     @Bindable var store: StoreOf<AppFeature>

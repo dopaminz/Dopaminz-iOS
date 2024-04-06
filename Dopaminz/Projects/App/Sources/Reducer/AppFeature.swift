@@ -9,7 +9,7 @@
 import Foundation
 import Feature
 import ComposableArchitecture
-
+import Core
 
 @Reducer
 public struct AppFeature {

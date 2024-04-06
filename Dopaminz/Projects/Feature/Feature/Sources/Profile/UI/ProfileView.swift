@@ -1,25 +1,27 @@
 //
-//  RootView.swift
+//  ProfileView.swift
 //  Feature
 //
 //  Created by 서원지 on 4/6/24.
 //  Copyright © 2024 Wonji suh. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
+import DesignSystem
 import ComposableArchitecture
 
-public struct RootView: View {
-    @Bindable var store: StoreOf<RootFeature>
+public struct ProfileView: View {
+    @Bindable var store: StoreOf<ProfileFeature>
     
     public init(
-        store: StoreOf<RootFeature>
+        store: StoreOf<ProfileFeature>
     ) {
         self.store = store
     }
     
     public var body: some View {
-        Text("Root")
+        Text(store.title)
     }
 }
+
+

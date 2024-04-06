@@ -9,6 +9,6 @@
 import Foundation
 
 public enum DopaminzAPI {
-    public static let baseURL = ""
+    public static let baseURL = "http://43.201.26.73:8080"
     public static let appleLoginBaseURL = "https://appleid.apple.com"
 }

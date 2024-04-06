@@ -1,5 +1,5 @@
 //
-//  RootFeature.swift
+//  HistoryFeature.swift
 //  Feature
 //
 //  Created by 서원지 on 4/6/24.
@@ -10,12 +10,13 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-public struct RootFeature {
+public struct HistoryFeature {
     public init() {}
     
     @ObservableState
     public struct State: Equatable {
         public init() {}
+        var title: String = "History"
     }
     
     public enum Action: Equatable {
@@ -30,5 +31,4 @@ public struct RootFeature {
         }
     }
 }
-
 
