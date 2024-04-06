@@ -8,17 +8,20 @@
 
 import Foundation
 
-public enum PollCategory: String, Codable {
-  case politics = "POLITICS"
-  case region = "REGION"
-  case economy = "ECONOMY"
-  case generation = "GENERATION"
-  case love = "LOVE"
-  case gender = "GENDER"
-  case etc = "ETC"
+public enum PollCategory: String, Codable, Equatable, CaseIterable {
+    case all = "ALL"
+    case politics = "POLITICS"
+    case region = "REGION"
+    case economy = "ECONOMY"
+    case generation = "GENERATION"
+    case love = "LOVE"
+    case gender = "GENDER"
+    case etc = "ETC"
     
     public var desc: String {
         switch self {
+        case .all:
+            return "전체"
         case .politics:
             return "정치"
         case .region:
