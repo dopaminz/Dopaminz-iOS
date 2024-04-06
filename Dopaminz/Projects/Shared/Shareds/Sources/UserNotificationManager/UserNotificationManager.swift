@@ -25,7 +25,7 @@ public class UserNotificationManager {
     
     public func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { isGranted, error in
-            if let error {
+            if let _ =  error {
                 Log.custom(category: "Permission", "Fail to request notification permission")
                 return
             }
@@ -52,7 +52,7 @@ public class UserNotificationManager {
         
         // 알림이 트리거 될 시간 설정
         let calendar = Calendar.current
-        var dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+      let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
         
         Log.custom(category: "UserNotification", "Notification scheduled on \(date)")
         
@@ -65,7 +65,7 @@ public class UserNotificationManager {
         // 알림 센터에 요청 추가
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { (error) in
-            if let error = error {
+            if let _ = error {
                 Log.error("Fail to register user notification")
             }
         }
