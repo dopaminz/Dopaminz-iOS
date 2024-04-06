@@ -37,7 +37,7 @@ public struct Content: Codable {
     public let pollID, memberID: Int?
     public let nickname, type, title, content: String?
     public let endDate, vote1, vote2, category: String?
-    public let vote1Count, vote2Count: Int?
+    public var vote1Count, vote2Count: Int?
     public let isVoted: Bool?
     public let createdDate: String?
 

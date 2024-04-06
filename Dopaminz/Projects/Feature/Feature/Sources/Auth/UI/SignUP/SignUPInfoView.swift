@@ -22,10 +22,9 @@ public struct SignUPInfoView: View {
     
     public var body: some View {
         VStack {
-//            Spacer()
-//                .frame(height: 16)
-                        
-          NavigationTitleButton(buttonAction: backAction, title: "회원가입")
+            NavigationTitleButton(title: "회원가입") {
+              backAction()
+            }
             
             Spacer()
                 .frame(height: 30)

@@ -10,27 +10,29 @@ import Foundation
 import SwiftUI
 
 public struct NavigationTitleBackButton: View {
+    
+    // MARK: - Properties
+    
     var buttonAction: () -> Void = { }
-    var leftAction: () -> Void = { }
     var image: ImageAsset
-    var showBackButton: Bool
+    var title: String
+    
+    // MARK: - Initializers
     
     public init(
         buttonAction: @escaping () -> Void,
-        leftAction: @escaping () -> Void,
         image: ImageAsset,
-        showBackButton: Bool
+        title: String
     ) {
         self.buttonAction = buttonAction
-        self.leftAction = leftAction
         self.image = image
-        self.showBackButton = showBackButton
+        self.title = title
     }
     
     public var body: some View {
-        HStack {
+        ZStack {
             HStack {
-                if showBackButton {
+                HStack {
                     Image(systemName: "chevron.left")
                         .resizable()
                         .scaledToFit()
@@ -39,26 +41,15 @@ public struct NavigationTitleBackButton: View {
                         .onTapGesture {
                             buttonAction()
                         }
+                    
+                  Spacer()
                 }
-                
-              
-              Spacer()
-                
-                Circle()
-                    .stroke(Color.basicBlack, style: .init(lineWidth: 1))
-                    .frame(width: 40, height: 40)
-                    .overlay {
-                        Image(asset: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                    }
-                    .onTapGesture {
-                        leftAction()
-                    }
                 
             }
             
+            Text(title)
+                .font(.pretendardFontFamily(family: .SemiBold, size: 18))
+                .foregroundStyle(Color.black)
         }
         .padding(.horizontal, 20)
     }

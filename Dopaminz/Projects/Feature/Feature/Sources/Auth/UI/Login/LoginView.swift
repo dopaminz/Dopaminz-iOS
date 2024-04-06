@@ -31,7 +31,9 @@ public struct LoginView: View {
             Spacer()
                 .frame(height: 17)
             
-            NavigationTitleButton(buttonAction: backAction, title: "로그인")
+            NavigationTitleButton(title: "로그인") {
+              backAction()
+            }
             
             logoImage()
             

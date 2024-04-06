@@ -14,8 +14,8 @@ public struct NavigationTitleButton: View {
     var title: String
     
     public init(
-        buttonAction: @escaping () -> Void,
-        title: String
+      title: String,
+      buttonAction: @escaping () -> Void
     ) {
         self.buttonAction = buttonAction
         self.title = title
@@ -37,8 +37,6 @@ public struct NavigationTitleButton: View {
             Text(title)
                 .pretendardFont(family: .SemiBold, size: 18)
                 .foregroundColor(Color.basicBlack)
-            
-            
             
             Spacer()
             

@@ -40,5 +40,7 @@ public enum ImageAsset: String {
   
     case stamp_solved
     case stamp_pending
+  
+    case back 
 }
 

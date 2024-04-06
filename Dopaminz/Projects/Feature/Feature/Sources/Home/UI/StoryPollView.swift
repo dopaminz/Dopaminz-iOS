@@ -50,6 +50,7 @@ struct StoryPollView: View {
                 Text(poll.title!)
                     .font(.headline5_SemiBold)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
                     .foregroundStyle(Color.black)
                 
                 Text(poll.content!)

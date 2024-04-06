@@ -62,11 +62,11 @@ public struct PollsResponseModel: Codable {
 }
 
 // MARK: - Comment
-public struct Comment: Codable {
-     public let commentID, memberID: Int
+public struct Comment: Codable, Equatable, Hashable {
+    public let commentID, memberID: Int
     public let nickname, content, createdDate: String
-
-     public enum CodingKeys: String, CodingKey {
+    
+    public enum CodingKeys: String, CodingKey {
         case commentID = "commentId"
         case memberID = "memberId"
         case nickname, content, createdDate

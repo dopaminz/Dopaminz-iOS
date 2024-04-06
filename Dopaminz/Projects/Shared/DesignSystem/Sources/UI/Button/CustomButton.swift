@@ -37,10 +37,9 @@ public struct CustomButton: View {
       Text(title)
         .font(.headline5_SemiBold)
         .foregroundColor(isDisabled ? Color.gray800 : .white)
-        .padding()
         .frame(maxWidth: .infinity)
     }
-    .frame(minHeight: 52)
+    .frame(maxHeight: 52)
     .background(isDisabled ? Color.gray100 : Color.blue500)
     .clipShape(RoundedRectangle(cornerRadius: 6))
     .disabled(isDisabled)

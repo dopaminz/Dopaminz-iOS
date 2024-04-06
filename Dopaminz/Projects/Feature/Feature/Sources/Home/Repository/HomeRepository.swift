@@ -34,13 +34,11 @@ import Service
   
     var isLoading = false
     
-    private var page: Int = 0
-    var polls: [Content] = []
+    var isLoadingPollDetail = false
     
     
     public func pollRepositoryModel(_ list: PollModel) {
         self.pollModel = list
-        polls.append(contentsOf: list.data?.contents ?? [])
     }
     
     public func pollDetailRepositoryModel(_ list: PollsModel) {
@@ -57,7 +55,6 @@ import Service
 
     public func pollMyRepositoryModel(_ list: PollMyModel) {
         self.pollMyModel = list
-//        polls.append(contentsOf: list.data?.contents ?? [])
     }
     
     public func voteRepositoryModel(_ list: VoteModel) {
@@ -68,13 +65,17 @@ import Service
         if let cancellable = pollsCancellable {
             cancellable.cancel()
         }
-        pollsCancellable = provider.requestWithProgressPublisher(.deletePoll(id: id))
+        
+        isLoadingPollDetail = true
+        
+        pollsCancellable = provider.requestWithProgressPublisher(.requestPoll(id: id))
             .compactMap {$0.response?.data}
             .receive(on: DispatchQueue.main)
             .decode(type: PollsModel.self, decoder: JSONDecoder())
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished:
+                    self?.isLoadingPollDetail = false
                     break
                 case .failure(let error):
                     Log.network("네트워크 에러", error.localizedDescription)
@@ -130,7 +131,7 @@ import Service
         hot: Bool,
         createdDate: SortType
     ) async {
-        await requestPoll(page: self.page, categories: categories, hot: hot, createdDate: createdDate)
+        await requestPoll(page: 0, categories: categories, hot: hot, createdDate: createdDate)
     }
     
     public func requestPoll(
@@ -140,6 +141,7 @@ import Service
         createdDate: Model.SortType
     ) async {
         isLoading = true
+        pollModel = nil
         
         if let cancellable = pollCancellable { cancellable.cancel() }
         pollCancellable =  provider.requestWithProgressPublisher(.requestPolls(page: page, categories: categories, hot: hot, createdDate: createdDate))
@@ -160,7 +162,6 @@ import Service
                 case "200":
                     self?.pollRepositoryModel(model)
                     Log.network("목록 조회", model)
-                    self?.page += 1
                 case "400":
                     self?.pollRepositoryModel(model)
                 default:

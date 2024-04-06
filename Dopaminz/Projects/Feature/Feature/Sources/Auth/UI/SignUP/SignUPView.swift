@@ -28,7 +28,9 @@ public struct SignUPView: View {
                 .frame(height: 16)
             
             
-          NavigationTitleButton(buttonAction: backAction, title: "회원가입")
+          NavigationTitleButton(title: "회원가임") {
+            backAction()
+          }
             
             signupTitle()
             
