@@ -64,3 +64,7 @@ public struct Content: Codable {
         self.createdDate = createdDate
     }
 }
+
+extension Content: Identifiable {
+  public var id: Int { return pollID! }
+}

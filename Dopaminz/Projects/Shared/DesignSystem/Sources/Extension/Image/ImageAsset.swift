@@ -19,6 +19,7 @@ public enum ImageAsset: String {
     case circle_exclamanation
   
     case logo
+    case logo_horizontal
     case ddang1
     case ddang2
     case ddang3
@@ -34,5 +35,7 @@ public enum ImageAsset: String {
     case category_love
     case category_politics
     case category_region
+    
+    case bell
 }
 

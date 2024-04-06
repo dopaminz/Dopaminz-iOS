@@ -14,7 +14,7 @@ public enum PollCategory: String, Codable, Equatable, CaseIterable {
     case region = "REGION"
     case economy = "ECONOMY"
     case generation = "GENERATION"
-    case love = "LOVE"
+    case relationships = "RELATIONSHIPS"
     case gender = "GENDER"
     case etc = "ETC"
     
@@ -30,7 +30,7 @@ public enum PollCategory: String, Codable, Equatable, CaseIterable {
             return "경제"
         case .generation:
             return "세대"
-        case .love:
+        case .relationships:
             return "연애"
         case .gender:
             return "성별"
@@ -38,5 +38,4 @@ public enum PollCategory: String, Codable, Equatable, CaseIterable {
             return "기타"
         }
     }
-    
 }

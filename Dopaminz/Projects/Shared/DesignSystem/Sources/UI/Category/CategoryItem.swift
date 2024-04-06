@@ -75,7 +75,7 @@ extension CategoryItem {
         .category_economy
     case .generation:
         .category_generation
-    case .love:
+    case .relationships:
         .category_love
     case .gender:
         .category_gender
