@@ -11,15 +11,33 @@ import SwiftUI
 import ComposableArchitecture
 
 public struct SplashView: View {
-    @Bindable var store: StoreOf<SplashFeature>
-
-    public init(
-        store: StoreOf<SplashFeature>
-    ) {
-        self.store = store
+  
+  // MARK: - Properties
+  
+  @State private var ddang1Offset: CGFloat = -500
+  
+  
+  // MARK: - Views
+  
+  public var body: some View {
+    VStack(spacing: 16) {
+      Image(uiImage: UIImage(named: "logo")!)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(height: 40)
+      
+      HStack(spacing: 4) {
+        Image(uiImage: UIImage(named: "ddang1")!)
+          .offset(y: ddang1Offset)
+        Image(uiImage: UIImage(named: "ddang2")!)
+        Image(uiImage: UIImage(named: "ddang3")!)
+      }
     }
-    
-    public var body: some View {
-        Text("splash")
+    .background(Color.white.ignoresSafeArea())
+    .onAppear {
+      withAnimation(.spring(duration: 0.3, bounce: 0.2)) {
+        ddang1Offset = 0
+      }
     }
+  }
 }

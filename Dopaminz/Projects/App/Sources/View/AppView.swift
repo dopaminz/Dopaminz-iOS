@@ -23,7 +23,7 @@ struct AppView: View {
             switch state {
             case .splash:
                 if let store = store.scope(state: \.splash, action: \.splash) {
-                    SplashView(store: store)
+                    SplashView()
                 }
                    
             case .root:
