@@ -30,6 +30,7 @@ public struct SignUPInfoFeature {
             nickName: String,
             completion: () -> Void
         )
+        case presentSelectCategory
     }
     
     @Dependency(AuthUseCase.self) var authUseCase
@@ -51,6 +52,10 @@ public struct SignUPInfoFeature {
                         completion: completion
                     )
                 }
+                
+            case .presentSelectCategory:
+                return .none
+                
             }
         }
     }

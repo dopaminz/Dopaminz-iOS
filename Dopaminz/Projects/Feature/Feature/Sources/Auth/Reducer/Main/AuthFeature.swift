@@ -41,6 +41,7 @@ public struct AuthFeature {
         case signUPInfo(SignUPInfoFeature)
         case profile(ProfileFeature)
         case web(WebFeature)
+        case selectCategory(SelectCategoryFeature)
     }
     
     public var body: some ReducerOf<Self> {
@@ -63,6 +64,9 @@ public struct AuthFeature {
                     
                 case .element(id: _, action: .signUP(.presentPolicyAgreedWeb)):
                     state.path.append(.web(.init(url: "https://pale-target-4fe.notion.site/1996be282ec54e6182af2d49fbd08757?pvs=4")))
+                    
+                case .element(id: _, action: .signUPInfo(.presentSelectCategory)):
+                    state.path.append(.selectCategory(.init()))
                 default:
                     break
                

@@ -68,6 +68,11 @@ public struct AuthView: View {
             case let .web(webStore):
                 WebViews(store: webStore)
                     .navigationBarBackButtonHidden()
+                
+            case let .selectCategory(selectCategoryFeature):
+                SelectCategoryView(store: selectCategoryFeature, goProfieAction: goProfieAction)
+                    .navigationBarBackButtonHidden()
+                
             }
         }
 

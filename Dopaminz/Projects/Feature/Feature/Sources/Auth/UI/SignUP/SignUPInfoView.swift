@@ -118,7 +118,7 @@ fileprivate extension SignUPInfoView {
                         password: store.password,
                         nickName: store.nickName,
                         completion: {
-                            
+                            store.send(.presentSelectCategory)
                         }))
                 }
                 .disabled(store.loginId == "" || store.password == "" || store.nickName == "")
