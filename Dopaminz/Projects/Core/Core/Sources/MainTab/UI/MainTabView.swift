@@ -24,16 +24,31 @@ public struct MainTabView : View {
         TabView {
             HomeView(store: store.scope(state: \.home, action: \.home))
                 .tabItem {
-                    Text("홈")
+                    Image(asset: .Home)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
                 }
             HistoryView(store: store.scope(state: \.history, action: \.history))
                 .tabItem {
-                    Text("내글")
+                    Image(asset: .History)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
                 }
             ProfileView(store: store.scope(state: \.profile, action: \.profile))
                 .tabItem {
-                    Text("마이")
+                    Image(asset: .Profile)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
                 }
+        }
+        .tint(.basicBlack)
+        .onAppear {
+            UITabBar.appearance().unselectedItemTintColor = UIColor(Color.gray)
+            UITabBar.appearance().backgroundColor = .white.withAlphaComponent(0.8)
+            UITabBar.appearance().isTranslucent = true
         }
     }
 }

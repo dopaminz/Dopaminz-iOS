@@ -10,9 +10,9 @@ import Foundation
 
 public enum ImageAsset: String {
     
-    case splash
-    case logoIcon
-    case kakao_login
+    case History
+    case Home
+    case Profile
     case empty
 }
 
