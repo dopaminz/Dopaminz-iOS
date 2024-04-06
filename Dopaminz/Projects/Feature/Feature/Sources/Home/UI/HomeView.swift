@@ -13,13 +13,8 @@ import Model
 
 public struct HomeView: View {
     var viewModel: HomeRepository = HomeRepository()
-   /* @Bindable var store: StoreOf<HomeFeature*/
     
-    public init(
-//        store: StoreOf<HomeFeature>
-    ) {
-//        self.store = store
-    }
+    public init( ) { }
     
     public var body: some View {
         Text("")
