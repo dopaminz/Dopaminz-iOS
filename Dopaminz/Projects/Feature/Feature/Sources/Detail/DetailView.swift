@@ -148,7 +148,7 @@ struct DetailView: View {
                 .foregroundStyle(Color.black)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            if viewModel.pollDetailModel!.data!.isVoted ?? false {
+            if viewModel.pollDetailModel!.data!.isVoted ?? false || isVoted {
                 pollPendingView(poll: poll)
             } else {
                 selectablePollView()

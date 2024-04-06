@@ -30,9 +30,9 @@ public struct CraatePollView: View {
                     Spacer()
                         .frame(height: 16)
                     
-                    NavigationTitleButton(title: "한문장 법정", buttonAction: {
-                        dismiss()
-                    })
+                  NavigationTitleButton(title: "한문장 법정") {
+                    dismiss()
+                  }
                     
                     Spacer()
                         .frame(height: 20)
