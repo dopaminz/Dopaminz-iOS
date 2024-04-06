@@ -21,16 +21,16 @@ public struct SplashView: View {
   
   public var body: some View {
     VStack(spacing: 16) {
-      Image(uiImage: UIImage(named: "logo")!)
+      Image(asset: .logo)
         .resizable()
         .aspectRatio(contentMode: .fit)
         .frame(height: 40)
       
       HStack(spacing: 4) {
-        Image(uiImage: UIImage(named: "ddang1")!)
+        Image(asset: .ddang1)
           .offset(y: ddang1Offset)
-        Image(uiImage: UIImage(named: "ddang2")!)
-        Image(uiImage: UIImage(named: "ddang3")!)
+        Image(asset: .ddang2)
+        Image(asset: .ddang3)
       }
     }
     .background(Color.white.ignoresSafeArea())
