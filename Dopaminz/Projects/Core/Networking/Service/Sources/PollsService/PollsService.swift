@@ -51,7 +51,7 @@ public enum PollsAPIService {
 extension PollsAPIService: BaseTargetType {
   public var path: String {
     switch self {
-    case .requestPolls(let page, let categories, let hot, let createdDate):
+    case .requestPolls:
       return PollsAPI.requestPolls
       
     case .requestPoll(let id):
@@ -69,7 +69,7 @@ extension PollsAPIService: BaseTargetType {
     case .revote(let voteId, _):
       return "\(PollsAPI.revote)/\(voteId)"
       
-    case .postComment(let pollId, let content):
+    case .postComment:
       return PollsAPI.postComment
       
     case .deleteComment(let commentId):
@@ -121,11 +121,15 @@ extension PollsAPIService: BaseTargetType {
       return .requestPlain
       
     case .createPoll(let type, let title, let content, let endDate, let vote1, let vote2, let category):
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+      let endDateString = dateFormatter.string(from: endDate)
+        
       let parameters: [String: Any] = [
         "type": type.rawValue,
         "title": title,
         "content": content,
-        "endDate": endDate,
+        "endDate": endDateString,
         "vote1": vote1,
         "vote2": vote2,
         "category": category.rawValue
@@ -155,7 +159,7 @@ extension PollsAPIService: BaseTargetType {
       ]
       return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
       
-    case .deleteComment(let commentId):
+    case .deleteComment:
       return .requestPlain
     }
   }
