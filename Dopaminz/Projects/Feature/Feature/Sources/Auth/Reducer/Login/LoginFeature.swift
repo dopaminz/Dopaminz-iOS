@@ -1,5 +1,5 @@
 //
-//  AuthFeature.swift
+//  LoginFeature.swift
 //  Feature
 //
 //  Created by 서원지 on 4/6/24.
@@ -10,24 +10,22 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-public struct AuthFeature {
+public struct LoginFeature {
     public init() {}
     
     @ObservableState
     public struct State: Equatable {
         public init() {}
+        var title: String = "Login"
     }
     
-    public enum Action: Equatable, BindableAction {
-        case binding(BindingAction<State>)
+    public enum Action: Equatable {
+        
     }
     
     public var body: some ReducerOf<Self> {
-        BindingReducer()
         Reduce { state, action in
             switch action {
-            case .binding(_):
-                return .none
                 
             }
         }

@@ -20,7 +20,22 @@ public struct ProfileView: View {
     }
     
     public var body: some View {
-        Text(store.title)
+        VStack {
+            Text(self.store.title)
+        }
+        
+        
+        .onAppear {
+            if store.acessToken == "" {
+                store.send(.presnetAuthFullScreen)
+            }
+        }
+        
+        .fullScreenCover(item: $store.scope(state: \.auth, action: \.auth)) { authStore in
+            AuthView(store: authStore, backAction: {
+                store.send(.closeBottomSheet)
+            })
+        }
     }
 }
 
