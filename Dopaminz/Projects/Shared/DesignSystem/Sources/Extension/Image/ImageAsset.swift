@@ -22,5 +22,16 @@ public enum ImageAsset: String {
     case ddang1
     case ddang2
     case ddang3
+  
+    // Category
+    
+    case category_all
+    case category_economy
+    case category_etc
+    case category_gender
+    case category_generation
+    case category_love
+    case category_politics
+    case category_region
 }
 
