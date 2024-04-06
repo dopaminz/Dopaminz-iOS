@@ -9,6 +9,7 @@
 import SwiftUI
 import DesignSystem
 import Model
+import PopupView
 
 public struct CraatePollView: View {
     @State var showSelectCateogry: Bool = false
@@ -20,9 +21,11 @@ public struct CraatePollView: View {
     @State private var vote2content: String = ""
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
+    @State private var showpopup: Bool = false
     @Environment(\.dismiss) var dismiss
     var viewModel: HomeRepository = HomeRepository()
     public init() {}
+    
     public var body: some View {
         VStack {
             ScrollView {
@@ -228,7 +231,7 @@ public struct CraatePollView: View {
                                                                vote2: vote2content,
                                                                category: selectedCategory ?? .all)
                                 }
-                                
+                                showpopup.toggle()
                                 
                                 
                                 
@@ -241,12 +244,46 @@ public struct CraatePollView: View {
                 }
             }
         }
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
+        .popup(isPresented: $showpopup, view: {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.basicBlack, style: .init(lineWidth: 1))
+                .fill(Color.gray50)
+                .frame(height: 80)
+                .padding(.horizontal, 20)
+                .overlay {
+                    VStack {
+                        Spacer()
+                            .frame(height: 33)
+                        
+                        Text("글이 정상적으로 등록 되었습니다")
+                            .pretendardFont(family: .SemiBold, size: 16)
+                            .foregroundColor(Color.basicBlack)
+                        
+                        Spacer()
+                            .frame(height: 33)
+                    }
+                    
+                    
+                }
+        }, customize: { popup in
+            popup
+                .type(.floater(verticalPadding: UIScreen.screenHeight*0.5))
+                .position(.bottom)
+                .animation(.easeIn)
+                .closeOnTap(true)
+                .closeOnTapOutside(true)
+                .backgroundColor(Color.basicGray5.opacity(0.9))
+                
+        })
         .sheet(isPresented: $showSelectCateogry) {
             VStack {
                 Spacer()
                     .frame(height: 28)
                 
-                ForEach(PollCategory.allCases, id: \.self) { item in
+                ForEach(PollCategory.allCases.filter { $0 != .all }, id: \.self) { item in
                     VStack {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(selectedCategory == item ? Color.blue100 : Color.gray50)
@@ -291,7 +328,7 @@ public struct CraatePollView: View {
                 selectedCategory = nil
             }
             .presentationCornerRadius(20)
-            .presentationDetents([.height(UIScreen.screenHeight*0.7)])
+            .presentationDetents([.height(UIScreen.screenHeight*0.5)])
         }
         .sheet(isPresented: $showingDatePicker) {
             VStack {

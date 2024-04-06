@@ -12,6 +12,7 @@ import CombineMoya
 import Moya
 import Model
 import Service
+import UIKit
 
 @Observable public class HomeRepository: HomeRepositoryProtocol {
    
@@ -23,6 +24,7 @@ import Service
     var pollDelteModel: PollDeleteModel?
     var voteModel: VoteModel?
     var createModel: CreatePoll?
+    var showpop: Bool = false
     var pollCancellable: AnyCancellable?
     var pollMyCancellable: AnyCancellable?
     var pollsCancellable: AnyCancellable?
@@ -252,6 +254,7 @@ import Service
                 case "200":
                     self?.pollCreateRepositoryMode(model)
                     Log.network("글 등록 성공", model)
+                    self?.showpop.toggle()
                 case "400":
                     self?.pollCreateRepositoryMode(model)
                     Log.network("글 등록 실패", model)
@@ -293,3 +296,12 @@ import Service
             })
     }
 }
+public extension UIApplication {
+    //MARK:  - 키보드에서 end 하면  키보드 내리기
+    public func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    
+}
+
