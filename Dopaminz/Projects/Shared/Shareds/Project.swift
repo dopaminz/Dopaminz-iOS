@@ -10,7 +10,8 @@ let project = Project.makeAppModule(
     settings:  .settings(),
     dependencies: [
         .Shared(implements: .DesignSystem),
-        .Shared(implements: .ThirdParty)
+        .Shared(implements: .ThirdParty),
+        .Networking(implements: .Service)
     ],
     sources: ["Sources/**"]
 )
