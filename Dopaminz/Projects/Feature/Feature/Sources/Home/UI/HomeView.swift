@@ -90,13 +90,11 @@ public struct HomeView: View {
             Spacer()
             
             Button {
-                // navigate to notification
                 createPOLL.toggle()
             } label: {
-                Image(asset: .bell)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(Color.gray800)
+              Text("작성하기")
+                .font(.headline5_SemiBold)
+                .foregroundStyle(Color.black)
             }
         }
         .frame(maxWidth: .infinity)

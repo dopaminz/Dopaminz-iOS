@@ -96,6 +96,12 @@ struct DetailView: View {
                                 .frame(height: 6)
                                 .padding(.horizontal, -20)
                             
+                          if let pollDetailModel = viewModel.pollDetailModel {
+                            commentView(comments: pollDetail.data?.comments ?? [])
+                          } else {
+                            ProgressView()
+                              .padding()
+                          }
                         }
                         .padding(20)
                     }
@@ -257,7 +263,7 @@ struct DetailView: View {
                     }
                 }
             
-            CustomButton(isDisabled: .constant(true), title: "투표하기") { }
+            CustomButton(isDisabled: .constant(true), title: "수정하기") { }
                 .frame(height: 44)
         }
     }
@@ -294,4 +300,32 @@ struct DetailView: View {
         }
         .clipShape(RoundedRectangle(cornerRadius: 7))
     }
+  
+  private func commentView(comments: [Comment]) -> some View {
+    VStack {
+      HStack {
+        Text("댓글 \(comments.count)")
+          .font(.body2_Regular)
+          .foregroundStyle(Color.gray500)
+        Spacer()
+      }
+      .padding(.top, 20)
+      .padding(.bottom, 8)
+      
+      ForEach(comments, id: \.self) { comment in
+        VStack(spacing: 8) {
+          Text(comment.nickname)
+            .font(.body_Medium)
+            .frame(maxWidth: .infinity, alignment: .leading)
+          
+          Text(comment.content)
+            .font(.body3_Regular)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+      }
+    }
+    .padding(.bottom, 100)
+  }
 }
