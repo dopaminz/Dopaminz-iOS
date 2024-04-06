@@ -85,7 +85,7 @@ public struct ProfileView: View {
                         .pretendardFont(family: .Medium, size: 18)
                         .foregroundColor(Color.basicBlack)
                         .onTapGesture {
-//                            store.send(.logout)
+                            store.send(.logout)
                         }
                     
                     Spacer()

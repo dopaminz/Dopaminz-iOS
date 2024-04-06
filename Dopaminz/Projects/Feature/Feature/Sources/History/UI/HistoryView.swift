@@ -14,6 +14,8 @@ import Model
 public struct HistoryView: View {
     @Bindable var store: StoreOf<HistoryFeature>
     var viewModel: HomeRepository = HomeRepository()
+    var authviewModel: AuthRepository = AuthRepository()
+    @State var showLogin: Bool = false
     @State var hasNext: Bool = false
     public init(
         store: StoreOf<HistoryFeature>
@@ -79,6 +81,13 @@ public struct HistoryView: View {
         }
         .task {
             await viewModel.requestpollMy()
+        }
+//        
+        
+        .fullScreenCover(isPresented: $showLogin) {
+            LoginView(store: Store(initialState: LoginFeature.State(), reducer: {
+                LoginFeature()
+            }), backAction: {}, goProfieAction: {})
         }
     }
 }

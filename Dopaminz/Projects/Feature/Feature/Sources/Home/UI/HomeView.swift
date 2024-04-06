@@ -34,7 +34,7 @@ public struct HomeView: View {
             
             ScrollView {
                 VStack(spacing: 14) {
-                    ForEach(viewModel.polls) { poll in
+                    ForEach(viewModel.pollModel?.data?.contents ?? []) { poll in
                         if poll.type! == "QUICK_POLL" {
                             QuickPollView(poll: poll, polid: 3)
                         } else {
