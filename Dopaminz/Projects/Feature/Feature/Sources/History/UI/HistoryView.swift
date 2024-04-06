@@ -68,7 +68,9 @@ public struct HistoryView: View {
                         hasNext.toggle()
                     }
                 
-                if let datacount = viewModel.polMyModel?.data?.count {
+                Spacer()
+                
+                if let datacount = viewModel.pollMyModel?.data?.count {
                     Text("게시글: \(datacount)")
                         .pretendardFont(family: .SemiBold, size: 16)
                         .foregroundColor(Color.basicBlack)
@@ -80,23 +82,19 @@ public struct HistoryView: View {
                 .frame(height: 31)
             
             
-            if hasNext == true {
-                ScrollView {
-                    VStack(spacing: 14) {
-                        if let polls = viewModel.polMyModel?.data {
-                            ForEach(polls) { poll in
-                                if poll.type! == "QUICK_POLL" {
-                                    quickPoll(poll)
-                                } else {
-                                    storyPoll(poll)
-                                }
+            ScrollView {
+                VStack(spacing: 14) {
+                    if let polls = viewModel.pollMyModel?.data {
+                        ForEach(polls) { poll in
+                            if poll.type! == "QUICK_POLL" {
+                                quickPoll(poll)
+                            } else {
+                                storyPoll(poll)
                             }
                         }
                     }
-                    .padding(20)
                 }
-            } else {
-                
+                .padding(20)
             }
             
             
@@ -139,29 +137,21 @@ fileprivate extension HistoryView {
                     .lineLimit(2)
                 
                 VStack(spacing: 12) {
-                    Button {
-                        // reveal result
-                    } label: {
-                        Text(poll.vote1!)
-                            .font(.headline5_SemiBold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(Color.blue50)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
+                    Text(poll.vote1!)
+                        .font(.headline5_SemiBold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Color.blue50)
+                        .clipShape(RoundedRectangle(cornerRadius: 7))
                     
-                    Button {
-                        // reveal result
-                    } label: {
-                        Text(poll.vote2!)
-                            .font(.headline5_SemiBold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(Color.blue50)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
+                    Text(poll.vote2!)
+                        .font(.headline5_SemiBold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Color.blue50)
+                        .clipShape(RoundedRectangle(cornerRadius: 7))
                 }
             }
         }

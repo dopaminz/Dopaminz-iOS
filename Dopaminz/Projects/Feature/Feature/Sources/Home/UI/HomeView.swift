@@ -16,6 +16,7 @@ public struct HomeView: View {
     // MARK: - Properties
     
     var viewModel: HomeRepository = HomeRepository()
+    var authviewModel: AuthRepository = AuthRepository()
     @State private var didAppear = false
     
     
@@ -35,7 +36,7 @@ public struct HomeView: View {
                 VStack(spacing: 14) {
                     ForEach(viewModel.polls) { poll in
                         if poll.type! == "QUICK_POLL" {
-                            QuickPollView(poll: poll)
+                            QuickPollView(poll: poll, polid: 3)
                         } else {
                             StoryPollView(poll: poll)
                         }
@@ -63,6 +64,10 @@ public struct HomeView: View {
                 requestPolls()
                 didAppear = true
             }
+            
+        }
+        .task {
+            await authviewModel.requsetProfile(completion: {})
         }
     }
     

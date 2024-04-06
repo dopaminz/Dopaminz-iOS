@@ -15,13 +15,16 @@ struct QuickPollView: View {
     
     private let poll: Content
     private var category: PollCategory!
+    var polid: Int
     @State private var isVoted = false
-    
+    var viewModel: HomeRepository = HomeRepository()
+   
     
     // MARK: - Initializers
     
-    public init(poll: Content) {
+    public init(poll: Content, polid: Int) {
         self.poll = poll
+        self.polid = polid
         self.category = PollCategory(rawValue: poll.category!)!
         isVoted = poll.isVoted!
     }
@@ -72,7 +75,9 @@ struct QuickPollView: View {
     private func selectablePollView() -> some View {
         VStack(spacing: 12) {
             Button {
-                // 여기에서 실제 투표 결과 쏘기
+                Task {
+                    await viewModel.requestVote(pollId: polid, voteNumber: 1)
+                }
             } label: {
                 Text(poll.vote1!)
                     .font(.headline5_SemiBold)
@@ -84,7 +89,9 @@ struct QuickPollView: View {
             }
             
             Button {
-                // 여기에서 실제 투표 결과 쏘기
+                Task {
+                    await viewModel.requestVote(pollId: polid, voteNumber: 2)
+                }
             } label: {
                 Text(poll.vote2!)
                     .font(.headline5_SemiBold)

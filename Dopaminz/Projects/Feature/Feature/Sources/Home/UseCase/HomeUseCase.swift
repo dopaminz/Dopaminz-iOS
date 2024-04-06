@@ -13,6 +13,8 @@ import DiContainer
 
 public struct HomeUseCase: HomeUseCaseProtocol  {
     
+    
+    
   
     private let repository: HomeRepositoryProtocol
     
@@ -40,6 +42,14 @@ public struct HomeUseCase: HomeUseCaseProtocol  {
    
     public func requestpollMy() async {
         return await repository.requestpollMy()
+    }
+    
+    public func requestVote(pollId: Int, voteNumber: Int) async {
+        return await repository.requestVote(pollId: pollId, voteNumber: voteNumber)
+    }
+    
+    public func createPoll(type: PollType, title: String, content: String, endDate: Date, vote1: String, vote2: String, category: PollCategory) async {
+        return await repository.createPoll(type: type, title: title, content: content, endDate: endDate, vote1: vote1, vote2: vote2, category: category)
     }
 }
 
