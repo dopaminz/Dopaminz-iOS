@@ -17,5 +17,10 @@ public enum ImageAsset: String {
   
     case circle_check
     case circle_exclamanation
+  
+    case logo
+    case ddang1
+    case ddang2
+    case ddang3
 }
 
