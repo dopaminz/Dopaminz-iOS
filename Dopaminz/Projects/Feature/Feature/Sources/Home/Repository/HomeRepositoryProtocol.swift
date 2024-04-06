@@ -13,4 +13,5 @@ public protocol HomeRepositoryProtocol {
     func requestPoll(page: Int, categories: [PollCategory], hot: Bool, createdDate: SortType) async
     func requestPollDetail(id: Int) async
     func requestPollDelete(id: Int) async
+    func requestpollMy() async
 }

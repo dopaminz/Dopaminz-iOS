@@ -38,6 +38,9 @@ public struct HomeUseCase: HomeUseCaseProtocol  {
         return await repository.requestPollDetail(id: id)
     }
    
+    public func requestpollMy() async {
+        return await repository.requestpollMy()
+    }
 }
 
 extension HomeUseCase: DependencyKey {

@@ -46,6 +46,8 @@ public enum PollsAPIService {
   
   // 댓글 삭제 (디테일)
   case deleteComment(commentId: Int)
+    
+ case pollsMy
 }
 
 extension PollsAPIService: BaseTargetType {
@@ -71,6 +73,9 @@ extension PollsAPIService: BaseTargetType {
       
     case .postComment:
       return PollsAPI.postComment
+        
+    case .pollsMy:
+        return PollsAPI.requestpollsMy
       
     case .deleteComment(let commentId):
       return "\(PollsAPI.deleteComment)/\(commentId)"
@@ -85,6 +90,9 @@ extension PollsAPIService: BaseTargetType {
     case .requestPoll:
       return .get
     
+    case .pollsMy:
+        return .get
+        
     case .createPoll:
       return .post
       
@@ -120,6 +128,13 @@ extension PollsAPIService: BaseTargetType {
     case .requestPoll:
       return .requestPlain
       
+    case .pollsMy:
+        let parameters: [String: Any] = [
+            :
+        ]
+        return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        
+        
     case .createPoll(let type, let title, let content, let endDate, let vote1, let vote2, let category):
       let dateFormatter = DateFormatter()
       dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"

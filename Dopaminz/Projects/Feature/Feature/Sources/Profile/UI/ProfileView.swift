@@ -13,6 +13,7 @@ import KeychainAccess
 
 public struct ProfileView: View {
     @Bindable var store: StoreOf<ProfileFeature>
+    var repostitory = AuthRepository()
     @State var nickName: String = ""
     public init(
         store: StoreOf<ProfileFeature>
@@ -84,7 +85,7 @@ public struct ProfileView: View {
                         .pretendardFont(family: .Medium, size: 18)
                         .foregroundColor(Color.basicBlack)
                         .onTapGesture {
-                            store.send(.logout)
+//                            store.send(.logout)
                         }
                     
                     Spacer()
@@ -99,12 +100,18 @@ public struct ProfileView: View {
                 if store.acessToken == "" {
                     store.send(.presnetAuthFullScreen)
                 } else {
-                    store.send(.requsetProfile(completion: {}))
                 }
                 let nickName = (try? Keychain().get("nickname")) ?? ""
                 self.nickName = nickName
                 print(nickName, self.nickName)
                 
+            }
+            .task {
+                await repostitory.requsetProfile(completion: {})
+            }
+            
+            .onChange(of: repostitory.profileModel?.data?.nickname ?? "") { newValue in
+                self.nickName = newValue
             }
         } destination: { switchStore in
             switch switchStore.case {

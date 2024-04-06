@@ -59,7 +59,7 @@ public struct ProfileFeature {
             case .presnetAuthFullScreen:
                 let accessToken = (try? Keychain().get("AuthorizationToken")) ?? ""
                 state.acessToken = accessToken
-                if accessToken == "" {
+                if state.acessToken == "" {
                     state.auth = AuthFeature.State()
                 }
                 return .none
@@ -83,7 +83,7 @@ public struct ProfileFeature {
                 try? Keychain().set(state.acessToken, key: "AuthorizationToken")
                 let accessToken = (try? Keychain().get("AuthorizationToken")) ?? ""
                 state.acessToken = accessToken
-                if accessToken == "" {
+                if  state.acessToken == "" {
                     state.auth = AuthFeature.State()
                 }
                 return .none
@@ -108,5 +108,6 @@ public struct ProfileFeature {
         .forEach(\.path, action: \.path)
     }
 }
+
 
 

@@ -15,12 +15,16 @@ import Service
 
 @Observable public class HomeRepository: HomeRepositoryProtocol {
     
+    
+    
     public init() {}
     
     var pollModel: PollModel?
+    var polMyModel: PollMyModel?
     var pollDetailModel: PollsModel?
     var pollDelteModel: PollDeleteModel?
     var pollCancellable: AnyCancellable?
+    var pollMyCancellable: AnyCancellable?
     var pollsCancellable: AnyCancellable?
     var pollDeleteCancellable: AnyCancellable?
     let provider = MoyaProvider<PollsAPIService>(plugins: [MoyaLoggingPlugin()])
@@ -28,6 +32,10 @@ import Service
     
     public func pollRepositoryModel(_ list: PollModel) {
         self.pollModel = list
+    }
+    
+    public func pollMyRepositoryModel(_ list: PollMyModel) {
+        self.polMyModel = list
     }
     
     public func pollDetailRepositoryModel(_ list: PollsModel) {
@@ -65,10 +73,6 @@ import Service
                         break
                     }
                 })
-            
-            
-            
-        
     }
     
     public func requestPollDetail(id: Int) async {
@@ -132,5 +136,32 @@ import Service
             })
     }
     
+    public func requestpollMy() async {
+        if let cancellable = pollMyCancellable {
+            cancellable.cancel()
+        }
+        pollCancellable =  provider.requestWithProgressPublisher(.pollsMy)
+                .compactMap {$0.response?.data}
+                .receive(on: DispatchQueue.main)
+                .decode(type: PollMyModel.self, decoder: JSONDecoder())
+                .sink(receiveCompletion: { [weak self] result in
+                    switch result {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        Log.error("네트워크 에러", error.localizedDescription)
+                    }
+                }, receiveValue: { [weak self] model in
+                    switch model.code {
+                    case "200":
+                        self?.pollMyRepositoryModel(model)
+                        Log.network("나의 목록 조회", model)
+                    case "400":
+                        self?.pollMyRepositoryModel(model)
+                    default:
+                        break
+                    }
+                })
+    }
     
 }

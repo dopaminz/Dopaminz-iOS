@@ -46,9 +46,9 @@ public struct HomeView: View {
             }
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 Task {
-                    await viewModel.requestPoll(page: 0, categories: [.economy, .etc], hot: false, createdDate: .ascending)
+                    await viewModel.requestPoll(page: 0, categories: [.all, .economy, .etc, .gender, .politics, .region, .relationships], hot: false, createdDate: .ascending)
                 }
             }
         }

@@ -17,4 +17,5 @@ public enum PollsAPI {
   public static let revote: String = "/votes"
   public static let postComment: String = "/comments"
   public static let deleteComment: String = "/comments"
+    public static let requestpollsMy: String = "/polls/my"
 }
