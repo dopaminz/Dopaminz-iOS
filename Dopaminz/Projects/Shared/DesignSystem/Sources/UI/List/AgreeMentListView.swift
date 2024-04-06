@@ -55,7 +55,7 @@ public struct AgreeMentListView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(checkAgreeButton ? .lightPurple : .basicGray5)
+                            .foregroundColor(checkAgreeButton ? .blue500 : .basicGray5)
                             .onTapGesture {
                                 allServiceAction()
                             }
@@ -64,7 +64,7 @@ public struct AgreeMentListView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(checkAgreeButton ? .lightPurple : .basicGray5)
+                            .foregroundColor(checkAgreeButton ? .blue500 : .basicGray5)
                             .onTapGesture {
                                 checkAgreeButton.toggle()
                             }
@@ -77,7 +77,7 @@ public struct AgreeMentListView: View {
                     if !agreeAllService {
                         Text(essential.rawValue)
                             .font(.system(size: 16))
-                            .foregroundColor(essential == .essential ? .lightPurple : .basicGray5)
+                            .foregroundColor(essential == .essential ? .basicGray5 : .basicGray5)
                     }
                     
                     

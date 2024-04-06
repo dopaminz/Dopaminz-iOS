@@ -8,6 +8,7 @@
 
 import Foundation
 import ComposableArchitecture
+import DesignSystem
 
 @Reducer
 public struct AuthFeature {
@@ -39,6 +40,7 @@ public struct AuthFeature {
         case signUP(SignUPFeature)
         case signUPInfo(SignUPInfoFeature)
         case profile(ProfileFeature)
+        case web(WebFeature)
     }
     
     public var body: some ReducerOf<Self> {
@@ -55,6 +57,12 @@ public struct AuthFeature {
                
                 case .element(id: _, action: .signUP(.presentSignUPInfo)):
                     state.path.append(.signUPInfo(.init()))
+                    
+                case .element(id: _, action: .signUP(.presentWebTermsofServiceAgreed)):
+                    state.path.append(.web(.init(url: "https://pale-target-4fe.notion.site/63d653fabc1c4c2bb9bd9ded5ea67aa5?pvs=4")))
+                    
+                case .element(id: _, action: .signUP(.presentPolicyAgreedWeb)):
+                    state.path.append(.web(.init(url: "https://pale-target-4fe.notion.site/1996be282ec54e6182af2d49fbd08757?pvs=4")))
                 default:
                     break
                

@@ -31,6 +31,8 @@ public struct SignUPFeature {
         case didTapAgreeServicePolicy
         case didTapAgreePrivacyPolicy
         case presentSignUPInfo
+        case presentPolicyAgreedWeb
+        case presentWebTermsofServiceAgreed
     }
     
     public var body: some ReducerOf<Self> {
@@ -62,6 +64,12 @@ public struct SignUPFeature {
                 return .none
                 
             case .presentSignUPInfo:
+                return .none
+                
+            case .presentWebTermsofServiceAgreed:
+                return .none
+                
+            case .presentPolicyAgreedWeb:
                 return .none
             }
         }

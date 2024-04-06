@@ -108,7 +108,7 @@ fileprivate extension SignUPView {
                     store.send(.didTapAgreeServicePolicy)
                 },
                 gotoWebView: {
-//
+                    self.store.send(.presentWebTermsofServiceAgreed)
                 }
             )
             
@@ -128,7 +128,7 @@ fileprivate extension SignUPView {
                     store.send(.didTapAgreePrivacyPolicy)
                 },
                 gotoWebView: {
-//                    self.store.send(.presentPolicyAgreedWeb)
+                    self.store.send(.presentPolicyAgreedWeb)
                 }
             )
             
@@ -141,7 +141,7 @@ fileprivate extension SignUPView {
             Spacer()
             
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.5))
+                .fill(Color.gray50)
                 .frame(height: 52)
                 .disabled(!self.store.isConfirmButtonActivated)
                 .overlay {

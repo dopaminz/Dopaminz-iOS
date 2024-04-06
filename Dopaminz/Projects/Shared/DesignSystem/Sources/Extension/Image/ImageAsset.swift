@@ -22,7 +22,8 @@ public enum ImageAsset: String {
     case ddang1
     case ddang2
     case ddang3
-  
+    case logoTItle
+    case logoTitle2
     // Category
     
     case category_all

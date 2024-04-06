@@ -27,10 +27,6 @@ public struct AuthView: View {
     
     public var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            ZStack {
-                Color.basicWhite
-                    .edgesIgnoringSafeArea(.all)
-                
                 VStack {
                     Spacer()
                         .frame(height: 17)
@@ -47,7 +43,6 @@ public struct AuthView: View {
                     
                 }
                 
-            }
         } destination: { switchStore in
             switch switchStore.case {
             case let .login(loginStore):
@@ -69,6 +64,10 @@ public struct AuthView: View {
             case let .profile(profileFeature):
                 ProfileView(store: profileFeature)
                     .navigationBarBackButtonHidden()
+                
+            case let .web(webStore):
+                WebViews(store: webStore)
+                    .navigationBarBackButtonHidden()
             }
         }
 
@@ -82,14 +81,20 @@ fileprivate extension AuthView {
     private func logoImage() -> some View {
         VStack {
             Spacer()
-                .frame(height: UIScreen.screenHeight*0.2)
+                .frame(height: 53.37)
             
-            Circle()
-                .stroke(Color.basicBlack, style: .init(lineWidth: 1))
-                .frame(width: 126, height: 126)
-                .overlay {
-                    
-                }
+            Image(asset: .logo)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 71, height: 68.8)
+            
+            Spacer()
+                .frame(height: 19)
+            
+            Image(asset: .logoTItle)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 120, height: 37)
         }
     }
     
@@ -97,7 +102,7 @@ fileprivate extension AuthView {
     private func loginTitle() -> some View {
         VStack {
             Spacer()
-                .frame(height: UIScreen.screenHeight*0.05)
+                .frame(height: 56.37)
             
             Text(store.authTitle)
                 .pretendardFont(family: .Bold, size: 20)
@@ -121,10 +126,10 @@ fileprivate extension AuthView {
     private func loginButton() -> some View {
         VStack {
             Spacer()
-                .frame(height: UIScreen.screenHeight*0.3)
+                .frame(height: 37)
             
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.basicBlack, style: .init(lineWidth: 2))
+                .fill(Color.gray50)
                 .frame(height: 58)
                 .overlay {
                     Text("로그인 하러 가기")

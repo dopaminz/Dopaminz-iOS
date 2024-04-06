@@ -30,10 +30,9 @@ public struct WebViews: View {
                 
                 Spacer()
                 
-                AnimatedImage(name: "loading.gif", isAnimating: .constant(true))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
+              ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color.blue500))
+                       .padding()
                 
                 Spacer()
                 

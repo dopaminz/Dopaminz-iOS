@@ -91,7 +91,7 @@ import API
             cancellable.cancel()
         }
         
-        signCancellable = provider.requestWithProgressPublisher(.login(username: userName, password: password))
+        signCancellable = provider.requestWithProgressPublisher(.signUP(username: userName, password: password, nickname: nickName))
             .compactMap{ $0.response?.data}
             .receive(on: DispatchQueue.main)
             .decode(type: AuthModel.self, decoder: JSONDecoder())

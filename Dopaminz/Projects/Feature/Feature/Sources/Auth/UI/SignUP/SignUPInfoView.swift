@@ -105,7 +105,7 @@ fileprivate extension SignUPInfoView {
                 .frame(height: UIScreen.screenHeight*0.1)
             
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.8))
+                .fill(Color.gray50)
                 .frame(height: 52)
                 .overlay {
                     Text("가입하기")

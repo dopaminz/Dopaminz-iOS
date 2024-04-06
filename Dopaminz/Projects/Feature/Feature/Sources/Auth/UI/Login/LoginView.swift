@@ -33,8 +33,7 @@ public struct LoginView: View {
             
             NavigationTitleButton(buttonAction: backAction, title: "로그인")
             
-            Spacer()
-                .frame(height: UIScreen.screenHeight*0.15)
+            logoImage()
             
             loginTextField()
             
@@ -61,17 +60,34 @@ fileprivate extension LoginView {
     
     
     @ViewBuilder
+    private func logoImage() -> some View {
+        VStack {
+            Spacer()
+                .frame(height: 45.56)
+            
+            Image(asset: .logoTitle2)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 163, height: 40)
+        }
+    }
+    
+    
+    @ViewBuilder
     private func loginTextField() -> some View {
         VStack {
+            Spacer()
+                .frame(height: 56.17)
+            
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.3))
+                .stroke(Color.gray200, style: .init(lineWidth: 1))
                 .frame(height: 62)
                 .overlay {
-                    TextField("아이디를 입력해주세요", text: $store.loginId)
+                    TextField("아이디", text: $store.loginId)
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
-                        .pretendardFont(family: .Bold, size: 22)
-                        .foregroundColor(Color.basicBlack)
+                        .pretendardFont(family: .Medium, size: 16)
+                        .foregroundColor(Color.gray400)
                         .padding(.horizontal, 10)
                     
                 }
@@ -80,13 +96,13 @@ fileprivate extension LoginView {
                 .frame(height: 7)
             
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.3))
+                .stroke(Color.gray200, style: .init(lineWidth: 1))
                 .frame(height: 62)
                 .overlay {
-                    SecureField("비밀번호를 입력해주세요", text: $store.password)
+                    SecureField("비밀번호", text: $store.password)
                         .textInputAutocapitalization(.never)
-                        .pretendardFont(family: .Bold, size: 22)
-                        .foregroundColor(Color.basicBlack)
+                        .pretendardFont(family: .Medium, size: 16)
+                        .foregroundColor(Color.gray400)
                         .padding(.horizontal, 10)
                     
                 }
@@ -102,13 +118,13 @@ fileprivate extension LoginView {
                 .frame(height: 35)
             
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.5))
+                .fill(Color.blue500)
                 .frame(height: 58)
                 .padding(.horizontal, 20)
                 .overlay {
                     Text("로그인")
                         .pretendardFont(family: .Bold, size: 24)
-                        .foregroundColor(Color.basicBlack)
+                        .foregroundColor(Color.white)
                 }
                 .onTapGesture {
                     store.send(.login(userName: store.loginId, password: store.password, completion: {
@@ -133,13 +149,21 @@ fileprivate extension LoginView {
                     }
             
                 
-                Text("|")
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 6, height: 11)
                 
                 Text("아이디·비밀번호 찾기")
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 6, height: 11)
+                
                 Spacer()
             }
             .pretendardFont(family: .Regular, size: 12)
-            .foregroundColor(.init(hex: "364356"))
+            .foregroundColor(Color.gray500)
         }
     }
     
