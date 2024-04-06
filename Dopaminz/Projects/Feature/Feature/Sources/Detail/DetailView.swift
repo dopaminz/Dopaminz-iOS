@@ -26,6 +26,8 @@ struct DetailView: View {
     @State private var isVoted = false
     @State private var voteCount1 = 0
     @State private var voteCount2 = 0
+  
+    @State private var votedNumber: Int = 0
     
     
     // MARK: - Initializers
@@ -207,6 +209,7 @@ struct DetailView: View {
                     }
                     
                     isVoted = true
+                    votedNumber = selectedVote
                     await viewModel.requestVote(pollId: poll.id, voteNumber: selectedVote)
                 }
             }
@@ -222,7 +225,7 @@ struct DetailView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
                 .background {
-                    if viewModel.pollDetailModel!.data!.votedNumber == 1 {
+                    if viewModel.pollDetailModel!.data!.votedNumber == 1 || votedNumber == 1 {
                         Color.blue100
                             .clipShape(RoundedRectangle(cornerRadius: 7))
                             .overlay {
@@ -241,7 +244,7 @@ struct DetailView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
                 .background {
-                    if viewModel.pollDetailModel!.data!.votedNumber == 2 {
+                    if viewModel.pollDetailModel!.data!.votedNumber == 2 || votedNumber == 2 {
                         Color.blue100
                             .clipShape(RoundedRectangle(cornerRadius: 7))
                             .overlay {

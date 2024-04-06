@@ -28,6 +28,7 @@ public struct HomeView: View {
     // MARK: - Views
     
     public var body: some View {
+      NavigationView {
         VStack {
             navigationBar()
                 .frame(height: 56)
@@ -38,7 +39,11 @@ public struct HomeView: View {
                         if poll.type! == "QUICK_POLL" {
                             QuickPollView(poll: poll, polid: 3)
                         } else {
+                          NavigationLink {
+                            DetailView(poll: poll)
+                          } label: {
                             StoryPollView(poll: poll)
+                          }
                         }
                     }
                     
@@ -62,6 +67,7 @@ public struct HomeView: View {
         .fullScreenCover(isPresented: $createPOLL, content: {
             CraatePollView()
         })
+      }
         .onAppear {
             if !didAppear {
                 requestPolls()
