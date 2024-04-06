@@ -16,6 +16,7 @@ public struct HomeView: View {
     // MARK: - Properties
     
     var viewModel: HomeRepository = HomeRepository()
+    @State private var didAppear = false
     
     
     // MARK: - Initializers
@@ -32,30 +33,39 @@ public struct HomeView: View {
             
             ScrollView {
                 VStack(spacing: 14) {
-                    if let polls = viewModel.pollModel?.data?.contents {
-                        ForEach(polls) { poll in
-                            if poll.type! == "QUICK_POLL" {
-                                quickPoll(poll)
-                            } else {
-                                storyPoll(poll)
-                            }
+                    ForEach(viewModel.polls) { poll in
+                        if poll.type! == "QUICK_POLL" {
+                            QuickPollView(poll: poll)
+                        } else {
+                            StoryPollView(poll: poll)
                         }
                     }
+                    
+                    GeometryReader { geometry in
+                        Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: geometry.frame(in: .global).minY)
+                    }
+                    .frame(height: 0)
+                    
+                    ProgressView()
+                        .padding()
+                        .opacity(viewModel.isLoading ? 1.0 : 0)
                 }
                 .padding(20)
             }
-        }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                Task {
-                    await viewModel.requestPoll(page: 0, categories: [.economy, .etc], hot: false, createdDate: .ascending)
+            .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { value in
+                if value < 1 { // 'value'가 1 미만일 때 스크롤 뷰의 끝에 도달했다고 간주
+                    requestPolls()
                 }
             }
         }
+        .onAppear {
+            if !didAppear {
+                requestPolls()
+                didAppear = true
+            }
+        }
     }
-}
-
-extension HomeView {
+    
     private func navigationBar() -> some View {
         HStack {
             Image(asset: .logo_horizontal)
@@ -77,155 +87,22 @@ extension HomeView {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
     }
-    
-    private func quickPoll(_ poll: Content) -> some View {
-        let category = PollCategory(rawValue: poll.category!)!
-        
-        return VStack(spacing: 16) {
-            HStack(spacing: 7) {
-                Image(asset: makeImage(category))
-                    .resizable()
-                    .frame(width: 34, height: 34)
-                
-                Text(category.desc)
-                    .font(.body3_Medium)
-                    .foregroundStyle(Color.black)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 4)
-                    .background(Color.gray100)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                
-                Spacer()
-            }
-            
-            VStack(spacing: 23) {
-                Text(poll.title!)
-                    .font(.headline4)
-                    .foregroundStyle(Color.black)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                
-                VStack(spacing: 12) {
-                    Button {
-                        // reveal result
-                    } label: {
-                        Text(poll.vote1!)
-                            .font(.headline5_SemiBold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(Color.blue50)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
-                    
-                    Button {
-                        // reveal result
-                    } label: {
-                        Text(poll.vote2!)
-                            .font(.headline5_SemiBold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 10)
-                            .background(Color.blue50)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
-                }
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
-        .background(Color.gray10)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-    }
-    
-    private func storyPoll(_ poll: Content) -> some View {
-        let category = PollCategory(rawValue: poll.category!)!
-        
-        return VStack(spacing: 16) {
-            VStack(spacing: 11) {
-                HStack(spacing: 7) {
-                    Image(asset: makeImage(category))
-                        .resizable()
-                        .frame(width: 34, height: 34)
-                    
-                    Text(category.desc)
-                        .font(.body3_Medium)
-                        .foregroundStyle(Color.black)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 4)
-                        .background(Color.gray100)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                    
-                    Spacer()
-                }
-                
-                Text(poll.title!)
-                    .font(.headline5_SemiBold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundStyle(Color.black)
-                
-                Text(poll.content!)
-                    .font(.body3_Regular)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2)
-                    .foregroundStyle(Color.black)
-            }
-            
-            HStack {
-                Spacer()
-//                Text("\(minutesFromNow(to: poll.createdDate!)!)분 전")
-//                    .foregroundStyle(Color.gray500)
-            }
-            .foregroundStyle(Color.gray500)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
-        .background(Color.gray10)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-    }
-    
-    private func makeImage(_ poll: PollCategory) -> ImageAsset {
-        switch poll {
-        case .all:
-            .category_all
-        case .politics:
-            .category_politics
-        case .region:
-            .category_region
-        case .economy:
-            .category_economy
-        case .generation:
-            .category_generation
-        case .relationships:
-            .category_love
-        case .gender:
-            .category_gender
-        case .etc:
-            .category_etc
+}
+
+
+// MARK: - Methods
+
+extension HomeView {
+    private func requestPolls() {
+        Task {
+            await viewModel.requestPoll(categories: [.economy, .etc], hot: false, createdDate: .ascending)
         }
     }
-    
-    private func minutesFromNow(to dateString: String) -> Int? {
-        // DateFormatter 인스턴스 생성
-        let dateFormatter = DateFormatter()
-        // 포맷 설정
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-        dateFormatter.timeZone = TimeZone.current // 현재 시간대 설정
+}
 
-        // 문자열을 Date 객체로 변환
-        guard let date = dateFormatter.date(from: dateString) else {
-            print("날짜 변환 실패")
-            return nil
-        }
-
-        // 현재 날짜와 비교
-        let now = Date()
-        let difference = Calendar.current.dateComponents([.minute], from: date, to: now)
-
-        return difference.minute
+struct ScrollViewOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value += nextValue()
     }
 }

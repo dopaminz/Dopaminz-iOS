@@ -24,10 +24,16 @@ import Service
     var pollsCancellable: AnyCancellable?
     var pollDeleteCancellable: AnyCancellable?
     let provider = MoyaProvider<PollsAPIService>(plugins: [MoyaLoggingPlugin()])
+  
+    var isLoading = false
+    
+    private var page: Int = 0
+    var polls: [Content] = []
     
     
     public func pollRepositoryModel(_ list: PollModel) {
         self.pollModel = list
+        polls.append(contentsOf: list.data?.contents ?? [])
     }
     
     public func pollDetailRepositoryModel(_ list: PollsModel) {
@@ -37,39 +43,7 @@ import Service
     public func pollDeleteRepositoryModel(_ list: PollDeleteModel) {
         self.pollDelteModel = list
     }
-    
-    public func requestPoll(
-        page: Int, categories: [PollCategory], hot: Bool, createdDate: Model.SortType) async {
-        if let cancellable = pollCancellable {
-            cancellable.cancel()
-        }
-            pollCancellable =  provider.requestWithProgressPublisher(.requestPolls(page: page, categories: categories, hot: hot, createdDate: createdDate))
-                .compactMap {$0.response?.data}
-                .receive(on: DispatchQueue.main)
-                .decode(type: PollModel.self, decoder: JSONDecoder())
-                .sink(receiveCompletion: { [weak self] result in
-                    switch result {
-                    case .finished:
-                        break
-                    case .failure(let error):
-                        Log.error("네트워크 에러", error.localizedDescription)
-                    }
-                }, receiveValue: { [weak self] model in
-                    switch model.code {
-                    case "200":
-                        self?.pollRepositoryModel(model)
-                        Log.network("목록 조회", model)
-                    case "400":
-                        self?.pollRepositoryModel(model)
-                    default:
-                        break
-                    }
-                })
-            
-            
-            
-        
-    }
+
     
     public func requestPollDetail(id: Int) async {
         if let cancellable = pollsCancellable {
@@ -132,5 +106,47 @@ import Service
             })
     }
     
+    public func requestPoll(
+        categories: [PollCategory],
+        hot: Bool,
+        createdDate: SortType
+    ) async {
+        await requestPoll(page: self.page, categories: categories, hot: hot, createdDate: createdDate)
+    }
     
+    public func requestPoll(
+        page: Int,
+        categories: [PollCategory],
+        hot: Bool,
+        createdDate: Model.SortType
+    ) async {
+        isLoading = true
+        
+        if let cancellable = pollCancellable { cancellable.cancel() }
+        pollCancellable =  provider.requestWithProgressPublisher(.requestPolls(page: page, categories: categories, hot: hot, createdDate: createdDate))
+            .compactMap {$0.response?.data}
+            .receive(on: DispatchQueue.main)
+            .decode(type: PollModel.self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { [weak self] result in
+                self?.isLoading = false
+                
+                switch result {
+                case .finished:
+                    break
+                case .failure(let error):
+                    Log.error("네트워크 에러", error.localizedDescription)
+                }
+            }, receiveValue: { [weak self] model in
+                switch model.code {
+                case "200":
+                    self?.pollRepositoryModel(model)
+                    Log.network("목록 조회", model)
+                    self?.page += 1
+                case "400":
+                    self?.pollRepositoryModel(model)
+                default:
+                    break
+                }
+            })
+    }
 }
