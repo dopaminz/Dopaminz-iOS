@@ -14,8 +14,7 @@ let project = Project.makeAppModule(
         .SPM.sdwebImage,
         .SPM.swiftJWT,
         .SPM.keychainAccess,
-        .SPM.kingfisher,
-        .SPM.svgKit
+        .SPM.popupView
     ],
     sources: ["Sources/**"]
 )

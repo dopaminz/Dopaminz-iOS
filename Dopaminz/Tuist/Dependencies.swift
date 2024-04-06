@@ -18,6 +18,7 @@ let swiftpackage = SwiftPackageManagerDependencies(
         .remote(url: "https://github.com/kishikawakatsumi/KeychainAccess", requirement: .upToNextMajor(from: "4.2.2")),
         .remote(url: "https://github.com/SVGKit/SVGKit.git", requirement: .upToNextMajor(from: "3.0.0")),
         .remote(url: "https://github.com/onevcat/Kingfisher.git", requirement: .upToNextMinor(from: "7.6.0")),
+        .remote(url: "https://github.com/exyte/PopupView.git", requirement: .upToNextMinor(from: "2.1.0"))
     ],
     baseSettings: .settings(
        configurations: [

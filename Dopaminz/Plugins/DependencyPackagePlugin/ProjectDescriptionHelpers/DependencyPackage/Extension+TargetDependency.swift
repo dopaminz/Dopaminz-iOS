@@ -16,14 +16,12 @@ public extension TargetDependency.SPM {
     static let combineMoya = TargetDependency.external(name: "CombineMoya", condition: .none)
     static let composableArchitecture = TargetDependency.external(name: "ComposableArchitecture", condition: .none)
     static let swinject = TargetDependency.external(name: "Swinject", condition: .none)
-    static let supabase = TargetDependency.external(name: "Supabase", condition: .none)
     static let sdwebImage = TargetDependency.external(name: "SDWebImageSwiftUI", condition: .none)
     static let swiftJWT = TargetDependency.external(name: "SwiftJWT", condition: .none)
    
     static let keychainAccess = TargetDependency.external(name: "KeychainAccess", condition: .none)
     
-    static let kingfisher = TargetDependency.external(name: "Kingfisher")
-    static let svgKit = TargetDependency.external(name: "SVGKit")
+    static let popupView = TargetDependency.external(name: "PopupView", condition: .none)
     
 }
 

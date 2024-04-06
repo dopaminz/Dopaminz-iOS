@@ -10,8 +10,6 @@ import SwiftUI
 import UIKit
 
 
-//import GoogleSignIn
-
 class AppDelegate: UIViewController, UIApplicationDelegate{
     
     //MARK: - 앱이 시작 되었을때
