@@ -144,6 +144,7 @@ import API
                 switch model.code {
                 case "200":
                     self?.profileRepositoryModel(model)
+                    try? Keychain().set(model.data?.nickname ?? "", key: "nickname")
                     Log.network("포로필 조회 성공", model)
                     completion()
                 case "400":

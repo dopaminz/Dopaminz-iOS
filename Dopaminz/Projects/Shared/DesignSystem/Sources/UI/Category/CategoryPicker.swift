@@ -33,7 +33,11 @@ public struct CategoryPicker: View {
                     category: category,
                     isSelected: categories.contains(category)) { isSelected in
                         if isSelected {
-                            categories.append(category)
+                            if category == .all {
+                                categories = PollCategory.allCases
+                            } else {
+                                categories.append(category)
+                            }
                         } else {
                             if let index = categories.firstIndex(of: category) {
                                 categories.remove(at: index)

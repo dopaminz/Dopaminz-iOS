@@ -9,6 +9,7 @@
 import Foundation
 import ComposableArchitecture
 import KeychainAccess
+import DesignSystem
 
 @Reducer
 public struct ProfileFeature {
@@ -30,27 +31,26 @@ public struct ProfileFeature {
         case presnetAuthFullScreen
         case closeBottomSheet
         case removePath
+        case requsetProfile(completion: () -> Void)
         case logout
+        case presentPolicyAgreedWeb
+        case presentWebTermsofService
+        case appearnickname
     }
     
     @Reducer(state: .equatable)
     public enum Path {
-        case auth(AuthFeature)
-        case login(LoginFeature)
+        case web(WebFeature)
     }
     
+    @Dependency(AuthUseCase.self) var authUseCase
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case let .path(action):
-                switch action {
-                case .element(id: _, action: .auth):
-                    state.path.append(.auth(.init()))
-                 
-                default:
-                    break
-                }
+            case .path:
                 return .none
+                    
+                 
                 
             
             case .auth:
@@ -72,6 +72,12 @@ public struct ProfileFeature {
                 state.path.removeLast()
                 return .none
                 
+            case .appearnickname:
+//                let nickName = try? Keychain().get("nickname")
+//                state.nickname = nickName ?? ""
+                return .none
+                
+                
             case .logout:
                 state.acessToken = ""
                 try? Keychain().set(state.acessToken, key: "AuthorizationToken")
@@ -80,6 +86,19 @@ public struct ProfileFeature {
                 if accessToken == "" {
                     state.auth = AuthFeature.State()
                 }
+                return .none
+            case let .requsetProfile(completion: completion):
+                return .run { send in
+                    await authUseCase.requsetProfile(completion: completion)
+                }
+                
+            case .presentPolicyAgreedWeb:
+                state.path.append(.web(.init(url: "https://pale-target-4fe.notion.site/63d653fabc1c4c2bb9bd9ded5ea67aa5?pvs=4")))
+                return .none
+                
+                
+            case .presentWebTermsofService:
+                state.path.append(.web(.init(url: "https://pale-target-4fe.notion.site/1996be282ec54e6182af2d49fbd08757?pvs=4")))
                 return .none
             }
         }

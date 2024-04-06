@@ -76,17 +76,22 @@ public struct SelectCategoryView: View {
             
             Spacer()
         }
-        .onReceive([cate].publisher.first()) { _ in
-            do {
-                let data = try JSONEncoder().encode(cate)
-                var categoriesData = keychain[data: "selectedCategories"] ?? Data()
-                categoriesData.append(data)
-                keychain[data: "selectedCategories"] = categoriesData
-                print(cate)
-            } catch {
-                print("Error encoding categories: \(error)")
+        
+        Spacer()
+            .frame(height: UIScreen.screenHeight*0.3)
+        
+        RoundedRectangle(cornerRadius: 12)
+            .fill(self.cate.isEmpty ? Color.gray50 : Color.blue500)
+            .frame(height: 52)
+            .overlay {
+                Text("다 선택했어요")
+                    .pretendardFont(family: .SemiBold, size: 20)
+                    .foregroundColor(self.cate.isEmpty ? Color.black : Color.basicWhite)
             }
-        }
+            .padding(.horizontal, 20)
+            .onTapGesture {
+                goProfieAction()
+            }
         
     }
 }

@@ -9,6 +9,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import KeychainAccess
 
 public struct AuthView: View {
     @Bindable var store: StoreOf<AuthFeature>
@@ -31,7 +32,16 @@ public struct AuthView: View {
                     Spacer()
                         .frame(height: 17)
                     
-                    NavigationBackButton(buttonAction: backAction)
+                    NavigationBackButton(buttonAction: {
+                        let accesstoken = try? Keychain().get("AuthorizationToken")
+                        print(accesstoken)
+                        if accesstoken != "" {
+                            backAction()
+                        } else {
+//                            backAction()
+                        }
+                        
+                    })
                     
                     logoImage()
                    
