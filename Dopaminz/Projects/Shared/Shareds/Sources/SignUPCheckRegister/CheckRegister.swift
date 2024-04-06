@@ -49,7 +49,7 @@ public struct CheckRegister{
 
     @discardableResult
     public static func isValidNickName(_ nickName: String) -> Bool {
-        let regexPattern = #"^[A-Za-z]{1,10}$"#
+        let regexPattern = #"^[ㄱ-ㅎ가-힣a-zA-Z]{3,8}$"#
         let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", regexPattern)
         return nicknamePredicate.evaluate(with: nickName)
     }

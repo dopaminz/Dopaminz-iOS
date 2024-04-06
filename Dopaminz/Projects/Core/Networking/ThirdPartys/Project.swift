@@ -11,7 +11,8 @@ let project = Project.makeAppModule(
     settings:  .settings(),
     dependencies: [
         .SPM.combineMoya,
-        .SPM.moya
+        .SPM.moya,
+        .SPM.keychainAccess
     ],
     sources: ["Sources/**"]
 )
