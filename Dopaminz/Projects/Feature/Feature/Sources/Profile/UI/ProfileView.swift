@@ -39,7 +39,9 @@ public struct ProfileView: View {
         .fullScreenCover(item: $store.scope(state: \.auth, action: \.auth)) { authStore in
             AuthView(store: authStore, backAction: {
                 store.send(.closeBottomSheet)
-            })
+            }) {
+                store.send(.closeBottomSheet)
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ public struct AuthFeature {
         case login(LoginFeature)
         case signUP(SignUPFeature)
         case signUPInfo(SignUPInfoFeature)
+        case profile(ProfileFeature)
     }
     
     public var body: some ReducerOf<Self> {

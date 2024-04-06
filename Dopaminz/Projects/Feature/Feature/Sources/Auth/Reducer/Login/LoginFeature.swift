@@ -29,6 +29,7 @@ public struct LoginFeature {
             completion: () -> Void
         )
         case presntSignUP
+        case presntProfile
     }
     
     @Dependency(AuthUseCase.self) var authUseCase
@@ -49,6 +50,9 @@ public struct LoginFeature {
                 return .none
                 
             case .presntSignUP:
+                return .none
+                
+            case .presntProfile:
                 return .none
             }
         }

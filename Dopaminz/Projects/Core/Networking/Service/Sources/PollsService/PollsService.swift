@@ -112,10 +112,10 @@ extension PollsAPIService: BaseTargetType {
       let parameters: [String: Any] = [
         "hot": hot,
         "createdDate": createdDate.rawValue,
-        "categories": categoryStrings.joined(separator: ","),
+        "categories": categories,
         "page": page
       ]
-      return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
       
     case .requestPoll:
       return .requestPlain

@@ -9,8 +9,10 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Model
 
 public struct HomeView: View {
+    var viewModel: HomeRepository = HomeRepository()
    /* @Bindable var store: StoreOf<HomeFeature*/
     
     public init(
@@ -21,6 +23,13 @@ public struct HomeView: View {
     
     public var body: some View {
         Text("")
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Task {
+                        await viewModel.requestPoll(page: 0, categories: [.economy, .etc], hot: false, createdDate: .ascending)
+                    }
+                }
+            }
     }
 }
 

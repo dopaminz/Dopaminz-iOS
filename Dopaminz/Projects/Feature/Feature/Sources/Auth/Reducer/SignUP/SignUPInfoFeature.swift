@@ -18,6 +18,7 @@ public struct SignUPInfoFeature {
         public init() {}
         var loginId: String = ""
         var password: String = ""
+        var repassword: String = ""
         var nickName: String = ""
     }
     

@@ -13,14 +13,16 @@ import ComposableArchitecture
 public struct AuthView: View {
     @Bindable var store: StoreOf<AuthFeature>
     var backAction: () -> Void = { }
-    
+    var goProfieAction: () -> Void = { }
     public init(
         store: StoreOf<AuthFeature>,
-        backAction: @escaping () -> Void
+        backAction: @escaping () -> Void,
+        goProfieAction: @escaping () -> Void
         
     ) {
         self.store = store
         self.backAction = backAction
+        self.goProfieAction = goProfieAction
     }
     
     public var body: some View {
@@ -51,7 +53,7 @@ public struct AuthView: View {
             case let .login(loginStore):
                 LoginView(store: loginStore, backAction: {
                     store.send(.removePath)
-                })
+                }, goProfieAction: goProfieAction)
                 .navigationBarBackButtonHidden()
             case let .signUP(signUPStore):
                 SignUPView(store: signUPStore, backAction: {
@@ -64,6 +66,9 @@ public struct AuthView: View {
                     store.send(.removePath)
                 })
                 .navigationBarBackButtonHidden()
+            case let .profile(profileFeature):
+                ProfileView(store: profileFeature)
+                    .navigationBarBackButtonHidden()
             }
         }
 

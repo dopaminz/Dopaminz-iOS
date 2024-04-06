@@ -16,4 +16,24 @@ public enum PollCategory: String, Codable {
   case love = "LOVE"
   case gender = "GENDER"
   case etc = "ETC"
+    
+    public var desc: String {
+        switch self {
+        case .politics:
+            return "정치"
+        case .region:
+            return "지역"
+        case .economy:
+            return "경제"
+        case .generation:
+            return "세대"
+        case .love:
+            return "연애"
+        case .gender:
+            return "성별"
+        case .etc:
+            return "기타"
+        }
+    }
+    
 }

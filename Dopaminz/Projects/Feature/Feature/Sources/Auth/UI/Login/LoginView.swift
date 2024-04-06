@@ -13,14 +13,17 @@ import ComposableArchitecture
 public struct LoginView: View {
     @Bindable var store: StoreOf<LoginFeature>
     var backAction: () -> Void = { }
+    var goProfieAction: () -> Void = { }
     
     public init(
         store: StoreOf<LoginFeature>,
-        backAction: @escaping () -> Void
+        backAction: @escaping () -> Void,
+        goProfieAction: @escaping () -> Void
         
     ) {
         self.store = store
         self.backAction = backAction
+        self.goProfieAction = goProfieAction
     }
     
     public var body: some View {
@@ -109,7 +112,7 @@ fileprivate extension LoginView {
                 }
                 .onTapGesture {
                     store.send(.login(userName: store.loginId, password: store.password, completion: {
-                        
+                        goProfieAction()
                     }))
                 }
         }

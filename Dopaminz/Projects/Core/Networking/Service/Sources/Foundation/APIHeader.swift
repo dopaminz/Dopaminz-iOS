@@ -23,7 +23,7 @@ struct APIConstants{
 extension APIConstants {
     static var baseHeader: Dictionary<String, String> {
         [
-          authorization : authorizationToken,
+          authorization : "Bearer \(authorizationToken)",
           contentType: APIHeaderManger.shared.contentType
         ]
     }
