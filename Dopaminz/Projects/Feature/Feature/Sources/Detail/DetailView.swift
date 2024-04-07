@@ -15,6 +15,7 @@ struct DetailView: View {
     // MARK: - Properties
   
     var viewModel: HomeRepository = HomeRepository()
+    var authModel: AuthRepository = AuthRepository()
     
     private let poll: Content
     private var category: PollCategory!
@@ -28,6 +29,10 @@ struct DetailView: View {
     @State private var voteCount2 = 0
   
     @State private var votedNumber: Int = 0
+  
+  @State private var commentText: String = ""
+    
+    @State private var comments: [Comment] = []
     
     
     // MARK: - Initializers
@@ -96,8 +101,8 @@ struct DetailView: View {
                                 .frame(height: 6)
                                 .padding(.horizontal, -20)
                             
-                          if let pollDetailModel = viewModel.pollDetailModel {
-                            commentView(comments: pollDetail.data?.comments ?? [])
+                            if let pollDetailModel = viewModel.pollDetailModel {
+                                commentView(comments: comments)
                           } else {
                             ProgressView()
                               .padding()
@@ -126,17 +131,37 @@ struct DetailView: View {
                         .fill(Color.gray50)
                         .frame(height: 40)
                         .overlay {
-                            Text("댓글이 비활성화 되었습니다.")
+                          TextField("댓글을 입력해주세요.", text: $commentText)
                                 .font(.body3_Medium)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.gray400)
+                                .foregroundStyle(Color.black)
                                 .padding(.horizontal, 13)
                         }
                     
-                    Text("등록")
-                        .font(.body3_Medium)
-                        .foregroundStyle(Color.black)
-                        .opacity(0.5)
+                    Button {
+                        Task {
+                            if !commentText.isEmpty {
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+                                
+                                await viewModel.createComment(pollId: poll.id, content: commentText)
+                                await viewModel.requestPollDetail(id: poll.id)
+                                
+                                comments.append(.init(
+                                    commentID: 403984012,
+                                    memberID: 134901231,
+                                    nickname: "나",
+                                    content: commentText,
+                                    createdDate: ""))
+                                
+                                commentText.removeAll()
+                            }
+                        }
+                    } label: {
+                        Text("등록")
+                            .font(.body3_Medium)
+                            .foregroundStyle(Color.black)
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 4)
@@ -146,6 +171,7 @@ struct DetailView: View {
         .task {
             await viewModel.requestpollMy()
             await viewModel.requestPollDetail(id: poll.id)
+            self.comments = viewModel.pollDetailModel?.data?.comments ?? []
         }
     }
     

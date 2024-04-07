@@ -101,7 +101,7 @@ struct QuickPollView: View {
                 }
             } label: {
                 Text(poll.vote1!)
-                    .font(.headline5_SemiBold)
+                .font(.pretendardFontFamily(family: .Medium, size: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 16)
                     .frame(height: 44)
@@ -122,7 +122,7 @@ struct QuickPollView: View {
                 }
             } label: {
                 Text(poll.vote2!)
-                    .font(.headline5_SemiBold)
+                .font(.pretendardFontFamily(family: .Medium, size: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 16)
                     .frame(height: 44)
@@ -152,7 +152,7 @@ struct QuickPollView: View {
     private func pendingView(poll: Content) -> some View {
         VStack(spacing: 12) {
             Text(poll.vote1!)
-                .font(.headline5_SemiBold)
+            .font(.pretendardFontFamily(family: .Medium, size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
@@ -171,7 +171,7 @@ struct QuickPollView: View {
                 }
             
             Text(poll.vote2!)
-                .font(.headline5_SemiBold)
+            .font(.pretendardFontFamily(family: .Medium, size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
@@ -247,7 +247,7 @@ struct PollProgressView: View {
             
             HStack {
                 Text(title)
-                    .font(.headline5_SemiBold)
+                .font(.pretendardFontFamily(family: .Medium, size: 16))
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
@@ -257,7 +257,7 @@ struct PollProgressView: View {
                 Spacer()
                 
                 Text("\(targetPercent)%")
-                    .font(.headline5_SemiBold)
+                .font(.pretendardFontFamily(family: .Medium, size: 16))
                     .foregroundColor(.blue500)
                     .padding(.trailing, 16)
             }
